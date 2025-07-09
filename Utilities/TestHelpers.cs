@@ -5,7 +5,7 @@ using OpenQA.Selenium.Support.UI;
 internal static class TestHelpers
 {
 	private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-	public static IWebDriver Driver { get; set; }
+	public static IWebDriver? Driver { get; set; }
 
 	/// <summary>
 	/// Logs a message with the specified log level.
@@ -28,7 +28,7 @@ internal static class TestHelpers
 	{
 		Log(NLog.LogLevel.Info, $"Waiting for element with locator: '{locator}' for up to '{timeOutSeconds}' seconds.");
 
-		WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(timeOutSeconds));
+		WebDriverWait wait = new WebDriverWait(Driver!, TimeSpan.FromSeconds(timeOutSeconds));
 		wait.Message = errorMessage;
 		wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(locator));
 	}
@@ -41,7 +41,7 @@ internal static class TestHelpers
 	internal static IWebElement GetElement(By locator)
 	{
 		Log(NLog.LogLevel.Info, $"Finding element with locator: '{locator}'");
-		return Driver.FindElement(locator);
+		return Driver!.FindElement(locator);
 	}
 
 	/// <summary>
@@ -56,7 +56,7 @@ internal static class TestHelpers
 	{
 		Log(NLog.LogLevel.Info, $"Waiting and getting element with locator: '{locator}' for up to '{timeOutSeconds}' seconds.");
 
-		WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(timeOutSeconds));
+		WebDriverWait wait = new WebDriverWait(Driver!, TimeSpan.FromSeconds(timeOutSeconds));
 		wait.Message = errorMessage;
 		wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementExists(locator));
 
@@ -91,7 +91,7 @@ internal static class TestHelpers
 	internal static IReadOnlyCollection<IWebElement> GetElements(By locator)
 	{
 		Log(NLog.LogLevel.Info, $"Finding elements with locator: '{locator}'");
-		return Driver.FindElements(locator);
+		return Driver!.FindElements(locator);
 	}
 
 	/// <summary>
@@ -111,7 +111,7 @@ internal static class TestHelpers
 			if (element.Displayed)
 				break;
 
-			((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].scrollIntoView(true);", element);
+			((IJavaScriptExecutor)Driver!).ExecuteScript("arguments[0].scrollIntoView(true);", element);
 			Thread.Sleep(500); // Wait for the element to scroll into view
 		}
 	}
@@ -127,7 +127,7 @@ internal static class TestHelpers
 
 		try
 		{
-			return Driver.FindElement(locator).Displayed;
+			return Driver!.FindElement(locator).Displayed;
 		}
 		catch (NoSuchElementException)
 		{
@@ -145,7 +145,7 @@ internal static class TestHelpers
 		Log(NLog.LogLevel.Info, $"Waiting for element to become stale: '{element}' for '{timeOutSeconds}' seconds.");
 
 		TimeSpan timeOut = TimeSpan.FromSeconds(timeOutSeconds);
-		WebDriverWait wait = new WebDriverWait(Driver, timeOut);
+		WebDriverWait wait = new WebDriverWait(Driver!, timeOut);
 		wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.StalenessOf(element));
 	}
 
@@ -160,7 +160,7 @@ internal static class TestHelpers
 	{
 		Log(NLog.LogLevel.Info, $"Waiting for element to disappear: '{locator}' for '{timeOutSeconds}' seconds.");
 
-		WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(timeOutSeconds));
+		WebDriverWait wait = new WebDriverWait(Driver!, TimeSpan.FromSeconds(timeOutSeconds));
 		wait.Message = errorMessage;
 		wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.InvisibilityOfElementLocated(locator));
 	}
