@@ -1,7 +1,7 @@
 using NLog;
 using OpenQA.Selenium;
 
-namespace SeleniumTests.Pages
+namespace SeleniumTests.UITests.PageObjects
 {
 	internal abstract class BasePage
 	{

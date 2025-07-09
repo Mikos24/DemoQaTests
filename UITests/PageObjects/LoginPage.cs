@@ -1,7 +1,8 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using SeleniumTests.UITests.Utils;
 
-namespace SeleniumTests.Pages
+namespace SeleniumTests.UITests.PageObjects
 {
     internal class LoginPage : BasePage
     {

@@ -4,11 +4,17 @@ This project contains automated tests using SpecFlow, Selenium WebDriver, and NU
 
 ## Project Structure
 
+### UITests/
 - `Features/` - Contains Gherkin feature files
-- `StepDefinitions/` - Contains step definition classes
+- `Steps/` - Contains step definition classes
+- `PageObjects/` - Contains page object model classes
 - `Hooks/` - Contains setup and teardown hooks
-- `Pages/` - Contains page object model classes
-- `Utilities/` - Contains helper classes
+- `Utils/` - Contains helper classes (TestHelpers, WebDriverFactory)
+
+### APITests/
+- `Models/` - Contains request/response models
+- `TestData/` - Contains test data files
+- `Utils/` - Contains API helper classes
 
 ## Running Tests
 

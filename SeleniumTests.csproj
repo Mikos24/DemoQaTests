@@ -32,7 +32,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Utilities\" />
+    <Folder Include="APITests\Models\" />
+    <Folder Include="APITests\TestData\" />
+    <Folder Include="APITests\Utils\" />
+    <Folder Include="UITests\Features\" />
+    <Folder Include="UITests\Steps\" />
+    <Folder Include="UITests\PageObjects\" />
+    <Folder Include="UITests\Hooks\" />
+    <Folder Include="UITests\Utils\" />
   </ItemGroup>
 
   <ItemGroup>
