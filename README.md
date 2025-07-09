@@ -1,6 +1,6 @@
-# SpecFlow Selenium Tests - DemoQA Login
+# DemoQA Automation Tests
 
-This project contains automated tests using SpecFlow, Selenium WebDriver, and NUnit for testing DemoQA login functionality.
+This project contains automated tests using SpecFlow, Selenium WebDriver, RestSharp, and NUnit for testing DemoQA functionality.
 
 ## Project Structure
 
@@ -53,7 +53,7 @@ Note: These are placeholder credentials. Update the LoginSteps.cs file with actu
 
 - `specflow.json` - SpecFlow configuration
 - `NLog.config` - Logging configuration
-- `SeleniumTests.csproj` - Project configuration with NuGet packages
+- `DemoQATests.csproj` - Project configuration with NuGet packages
 
 ## Dependencies
 
