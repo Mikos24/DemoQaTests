@@ -2,7 +2,7 @@ using NLog;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
-namespace SeleniumTests.UITests.Utils
+namespace DemoQATests.UITests.Utils
 {
     internal static class TestHelpers
     {

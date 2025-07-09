@@ -1,4 +1,4 @@
-namespace SeleniumTests.APITests.Models
+namespace DemoQATests.APITests.Models
 {
     public class AuthRequest
     {

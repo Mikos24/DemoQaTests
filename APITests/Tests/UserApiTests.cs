@@ -1,9 +1,9 @@
 using NUnit.Framework;
 using RestSharp;
 using Newtonsoft.Json;
-using SeleniumTests.APITests.Models;
+using DemoQATests.APITests.Models;
 
-namespace SeleniumTests.APITests.Tests
+namespace DemoQATests.APITests.Tests
 {
     [TestFixture]
     public class UserApiTests

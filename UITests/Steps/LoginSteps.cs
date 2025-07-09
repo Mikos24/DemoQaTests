@@ -1,9 +1,9 @@
 using NUnit.Framework;
 using OpenQA.Selenium;
-using SeleniumTests.UITests.PageObjects;
+using DemoQATests.UITests.PageObjects;
 using TechTalk.SpecFlow;
 
-namespace SeleniumTests.UITests.Steps
+namespace DemoQATests.UITests.Steps
 {
     [Binding]
     public class LoginSteps

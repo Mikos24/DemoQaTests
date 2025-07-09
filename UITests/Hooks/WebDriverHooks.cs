@@ -5,9 +5,9 @@ using OpenQA.Selenium.Chrome;
 using TechTalk.SpecFlow;
 using WebDriverManager;
 using WebDriverManager.DriverConfigs.Impl;
-using SeleniumTests.UITests.Utils;
+using DemoQATests.UITests.Utils;
 
-namespace SeleniumTests.UITests.Hooks
+namespace DemoQATests.UITests.Hooks
 {
     [Binding]
     public class WebDriverHooks

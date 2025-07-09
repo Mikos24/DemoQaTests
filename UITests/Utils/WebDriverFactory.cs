@@ -4,7 +4,7 @@ using OpenQA.Selenium.Chrome;
 using WebDriverManager;
 using WebDriverManager.DriverConfigs.Impl;
 
-namespace SeleniumTests.UITests.Utils
+namespace DemoQATests.UITests.Utils
 {
     public class WebDriverFactory
     {

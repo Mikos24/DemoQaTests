@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace SeleniumTests.UITests.Features
+namespace DemoQATests.UITests.Features
 {
     using TechTalk.SpecFlow;
     using System;
