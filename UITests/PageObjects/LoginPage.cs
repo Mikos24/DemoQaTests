@@ -1,38 +1,37 @@
 using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
 using DemoQATests.UITests.Utils;
 
 namespace DemoQATests.UITests.PageObjects
 {
     internal class LoginPage : BasePage
     {
-        #region Page Elements
-
+        #region Locators
         private readonly By usernameInput = By.Id("userName");
         private readonly By passwordInput = By.Id("password");
         private readonly By loginButton = By.Id("login");
         private readonly By profileUserName = By.Id("userName-value");
-        private readonly By logoutButton = By.Id("submit");
+        #endregion
 
+        #region Constants
+        private const string LOGIN_URL = "https://demoqa.com/login";
+        private const int DEFAULT_WAIT_TIMEOUT = 10;
         #endregion
 
         public LoginPage(IWebDriver driver) : base(driver)
         {
         }
 
-        #region Methods
-
         public void NavigateToLoginPage()
         {
             Logger.Info("Navigating to DemoQA login page");
-            driver.Navigate().GoToUrl("https://demoqa.com/login");
+            driver.Navigate().GoToUrl(LOGIN_URL);
         }
 
         public void EnterCredentials(string username, string password)
         {
             Logger.Info($"Entering credentials for user: {username}");
             
-            TestHelpers.WaitForElementToBeVisible(usernameInput, 10);
+            TestHelpers.WaitForElementToBeVisible(usernameInput, DEFAULT_WAIT_TIMEOUT);
             TestHelpers.GetElement(usernameInput).Clear();
             TestHelpers.GetElement(usernameInput).SendKeys(username);
 
@@ -51,7 +50,7 @@ namespace DemoQATests.UITests.PageObjects
             Logger.Info("Checking if profile page is displayed");
             try
             {
-                TestHelpers.WaitForElementToBeVisible(profileUserName, 10);
+                TestHelpers.WaitForElementToBeVisible(profileUserName, DEFAULT_WAIT_TIMEOUT);
                 return TestHelpers.GetElement(profileUserName).Displayed;
             }
             catch (Exception ex)
@@ -64,10 +63,8 @@ namespace DemoQATests.UITests.PageObjects
         public string GetProfileUserName()
         {
             Logger.Info("Getting profile username");
-            TestHelpers.WaitForElementToBeVisible(profileUserName, 10);
+            TestHelpers.WaitForElementToBeVisible(profileUserName, DEFAULT_WAIT_TIMEOUT);
             return TestHelpers.GetElement(profileUserName).Text;
         }
-
-        #endregion
     }
 }

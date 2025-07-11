@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using OpenQA.Selenium;
 using DemoQATests.UITests.PageObjects;
+using DemoQATests.UITests.Utils;
 using TechTalk.SpecFlow;
 
 namespace DemoQATests.UITests.Steps
@@ -8,34 +9,33 @@ namespace DemoQATests.UITests.Steps
     [Binding]
     public class LoginSteps
     {
-        private readonly IWebDriver _driver;
-        private readonly LoginPage _loginPage;
+        private readonly LoginPage loginPage;
 
-        public LoginSteps(IWebDriver driver)
+        public LoginSteps()
         {
-            _driver = driver;
-            _loginPage = new LoginPage(_driver);
+            // Get driver from TestHelpers static property
+            loginPage = new LoginPage(TestHelpers.Driver!);
         }
 
         [Given(@"I navigate to the login page")]
         public void GivenINavigateToTheLoginPage()
         {
-            _loginPage.NavigateToLoginPage();
+            loginPage.NavigateToLoginPage();
         }
 
         [When(@"I enter valid credentials")]
         public void WhenIEnterValidCredentials()
         {
-            _loginPage.EnterCredentials("testuser", "Password123!");
-            _loginPage.ClickLogin();
+            loginPage.EnterCredentials("testuser", "Password123!");
+            loginPage.ClickLogin();
         }
 
         [Then(@"I should see my profile page")]
         public void ThenIShouldSeeMyProfilePage()
         {
-            Assert.That(_loginPage.IsProfilePageDisplayed(), Is.True, "Profile page should be displayed after successful login");
+            Assert.That(loginPage.IsProfilePageDisplayed(), Is.True, "Profile page should be displayed after successful login");
             
-            string profileUserName = _loginPage.GetProfileUserName();
+            string profileUserName = loginPage.GetProfileUserName();
             Assert.That(profileUserName, Is.Not.Empty, "Profile username should be displayed");
         }
     }
