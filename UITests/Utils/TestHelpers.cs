@@ -6,7 +6,7 @@ namespace DemoQATests.UITests.Utils
 {
     internal static class TestHelpers
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private static readonly Logger Logger = LoggingConfig.GetCurrentClassLogger();
         public static IWebDriver? Driver { get; set; }
 
         //Navigates to provided URL

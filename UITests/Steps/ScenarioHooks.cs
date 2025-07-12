@@ -3,17 +3,11 @@ using OpenQA.Selenium;
 using TechTalk.SpecFlow;
 using DemoQATests.UITests.Utils;
 
-namespace DemoQATests.UITests.Hooks
+namespace DemoQATests.UITests.Steps
 {
     [Binding]
-    public class WebDriverHooks
+    public class ScenarioHooks
     {
-        [BeforeTestRun]
-        public static void GlobalSetup()
-        {
-            // Only setup logging - WebDriverFactory handles driver setup
-            LogManager.Setup().LoadConfigurationFromFile("NLog.config");
-        }
 
         [BeforeScenario]
         public void BeforeScenario()

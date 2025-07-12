@@ -10,7 +10,7 @@ namespace DemoQATests.UITests.Utils
 {
     public static class WebDriverFactory
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private static readonly Logger Logger = LoggingConfig.GetCurrentClassLogger();
 
         /// <summary>
         /// Creates a WebDriver instance for the specified browser type

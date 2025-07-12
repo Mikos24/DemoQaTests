@@ -6,10 +6,9 @@ This project contains automated tests using SpecFlow, Selenium WebDriver, RestSh
 
 ### UITests/
 - `Features/` - Contains Gherkin feature files
-- `Steps/` - Contains step definition classes
+- `Steps/` - Contains step definition classes and scenario hooks
 - `PageObjects/` - Contains page object model classes
-- `Hooks/` - Contains setup and teardown hooks
-- `Utils/` - Contains helper classes (TestHelpers, WebDriverFactory)
+- `Utils/` - Contains helper classes (TestHelpers, WebDriverFactory, LoggingConfig)
 
 ### APITests/
 - `Models/` - Contains request/response models
@@ -55,6 +54,20 @@ Note: These are placeholder credentials. Update the LoginSteps.cs file with actu
 - `NLog.config` - Logging configuration
 - `DemoQATests.csproj` - Project configuration with NuGet packages
 
+### Logging
+
+The project uses NLog for logging with a centralized configuration approach:
+- `LoggingConfig` utility class handles automatic NLog setup
+- Logs are written to both console and `LogFile.txt` in the output directory
+- All test classes inherit logging capability through `BasePage` or use `LoggingConfig.GetCurrentClassLogger()`
+
+### Test Architecture
+
+- **ScenarioHooks**: Manages WebDriver lifecycle (setup/teardown) per scenario
+- **BasePage**: Base class for all page objects with built-in logging
+- **TestHelpers**: Utility methods for common test operations
+- **WebDriverFactory**: Creates and configures WebDriver instances
+
 ## Dependencies
 
 - SpecFlow 3.9.74
@@ -63,3 +76,16 @@ Note: These are placeholder credentials. Update the LoginSteps.cs file with actu
 - NUnit 3.13.3
 - NLog 5.4.0
 - WebDriverManager 2.17.5
+
+## Recent Improvements
+
+### Logging Refactoring
+- Centralized logging configuration through `LoggingConfig` utility class
+- Automatic NLog initialization with thread-safe setup
+- Removed scattered logging setup from test hooks
+- Improved separation of concerns between infrastructure and test logic
+
+### Project Organization
+- Moved scenario hooks to `Steps/` folder to group all test attribute classes together
+- Renamed `WebDriverHooks` to `ScenarioHooks` for better clarity
+- Removed empty `Hooks/` folder for cleaner project structure
