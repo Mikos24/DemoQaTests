@@ -1,5 +1,4 @@
 using NUnit.Framework;
-using OpenQA.Selenium;
 using DemoQATests.UITests.PageObjects;
 using DemoQATests.UITests.Utils;
 using TechTalk.SpecFlow;
@@ -13,8 +12,7 @@ namespace DemoQATests.UITests.Steps
 
         public LoginSteps()
         {
-            // Get driver from TestHelpers static property
-            loginPage = new LoginPage(TestHelpers.Driver!);
+            loginPage = new LoginPage();
         }
 
         [Given(@"I navigate to the login page")]

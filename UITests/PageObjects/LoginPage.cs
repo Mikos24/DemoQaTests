@@ -1,4 +1,3 @@
-using OpenQA.Selenium;
 using DemoQATests.UITests.Utils;
 
 namespace DemoQATests.UITests.PageObjects
@@ -6,10 +5,10 @@ namespace DemoQATests.UITests.PageObjects
     internal class LoginPage : BasePage
     {
         #region Locators
-        private readonly By usernameInput = By.Id("userName");
-        private readonly By passwordInput = By.Id("password");
-        private readonly By loginButton = By.Id("login");
-        private readonly By profileUserName = By.Id("userName-value");
+        private readonly Locator usernameInput = Locator.ById("userName");
+        private readonly Locator passwordInput = Locator.ById("password");
+        private readonly Locator loginButton = Locator.ById("login");
+        private readonly Locator profileUserName = Locator.ById("userName-value");
         #endregion
 
         #region Constants
@@ -17,14 +16,14 @@ namespace DemoQATests.UITests.PageObjects
         private const int DEFAULT_WAIT_TIMEOUT = 10;
         #endregion
 
-        public LoginPage(IWebDriver driver) : base(driver)
+        public LoginPage() : base()
         {
         }
 
         public void NavigateToLoginPage()
         {
             Logger.Info("Navigating to DemoQA login page");
-            driver.Navigate().GoToUrl(LOGIN_URL);
+            TestHelpers.NavigateToUrl(LOGIN_URL);
         }
 
         public void EnterCredentials(string username, string password)
@@ -32,11 +31,8 @@ namespace DemoQATests.UITests.PageObjects
             Logger.Info($"Entering credentials for user: {username}");
             
             TestHelpers.WaitForElementToBeVisible(usernameInput, DEFAULT_WAIT_TIMEOUT);
-            TestHelpers.GetElement(usernameInput).Clear();
-            TestHelpers.GetElement(usernameInput).SendKeys(username);
-
-            TestHelpers.GetElement(passwordInput).Clear();
-            TestHelpers.GetElement(passwordInput).SendKeys(password);
+            TestHelpers.EnterText(usernameInput, username);
+            TestHelpers.EnterText(passwordInput, password);
         }
 
         public void ClickLogin()
@@ -51,7 +47,7 @@ namespace DemoQATests.UITests.PageObjects
             try
             {
                 TestHelpers.WaitForElementToBeVisible(profileUserName, DEFAULT_WAIT_TIMEOUT);
-                return TestHelpers.GetElement(profileUserName).Displayed;
+                return TestHelpers.IsElementDisplayed(profileUserName);
             }
             catch (Exception ex)
             {
@@ -63,8 +59,7 @@ namespace DemoQATests.UITests.PageObjects
         public string GetProfileUserName()
         {
             Logger.Info("Getting profile username");
-            TestHelpers.WaitForElementToBeVisible(profileUserName, DEFAULT_WAIT_TIMEOUT);
-            return TestHelpers.GetElement(profileUserName).Text;
+            return TestHelpers.WaitAndGetElementText(profileUserName, DEFAULT_WAIT_TIMEOUT);
         }
     }
 }
