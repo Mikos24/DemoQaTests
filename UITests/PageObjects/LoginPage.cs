@@ -100,14 +100,12 @@ namespace DemoQATests.UITests.PageObjects
         public bool IsErrorMessageDisplayed()
         {
             Logger.Info("Checking if error message is displayed");
-            
+
             // Check for various possible error message locations on DemoQA
             var possibleErrorLocators = new[]
             {
-                Locator.ById("name"),
-                Locator.ByXPath("//p[contains(@class, 'mb-1') and contains(text(), 'Invalid')]"),
-                Locator.ByXPath("//div[contains(@class, 'rt-tbody')]//div[contains(text(), 'No rows found')]"),
-                Locator.ByXPath("//*[contains(text(), 'Invalid') or contains(text(), 'invalid')]")
+                Locator.ByXPath("//*[contains(text(), 'Invalid') or contains(text(), 'invalid')]"),
+                Locator.ByXPath("//input[@class='mr-sm-2 is-invalid form-control']")
             };
             
             foreach (var locator in possibleErrorLocators)
