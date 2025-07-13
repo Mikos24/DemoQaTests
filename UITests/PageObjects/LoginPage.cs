@@ -9,6 +9,7 @@ namespace DemoQATests.UITests.PageObjects
         private readonly Locator passwordInput = Locator.ById("password");
         private readonly Locator loginButton = Locator.ById("login");
         private readonly Locator profileUserName = Locator.ById("userName-value");
+        private readonly Locator errorMessage = Locator.ById("name");  // DemoQA uses this ID for error messages
         #endregion
 
         #region Constants
@@ -41,6 +42,33 @@ namespace DemoQATests.UITests.PageObjects
             TestHelpers.ClickElement(loginButton);
         }
 
+        public void WaitForLoginResponse(int timeoutSeconds = DEFAULT_WAIT_TIMEOUT)
+        {
+            Logger.Info($"Waiting for login process to complete (timeout: {timeoutSeconds}s)");
+            
+            var endTime = DateTime.Now.AddSeconds(timeoutSeconds);
+            const int pollingIntervalMs = 500;
+            
+            while (DateTime.Now < endTime)
+            {
+                var errorDisplayed = IsErrorMessageDisplayed();
+                var loginPageDisplayed = IsLoginPageDisplayed();
+                
+                // If we have an error message OR we're no longer on the login page, we have a response
+                if (errorDisplayed || !loginPageDisplayed)
+                {
+                    Logger.Info("Login process completed");
+                    return; // Response received
+                }
+                
+                // Still waiting for response, sleep briefly before checking again
+                Thread.Sleep(pollingIntervalMs);
+            }
+            
+            Logger.Error($"Timeout waiting for login process to complete after {timeoutSeconds} seconds");
+            throw new TimeoutException($"Timeout waiting for login response after {timeoutSeconds} seconds");
+        }
+
         public bool IsProfilePageDisplayed()
         {
             Logger.Info("Checking if profile page is displayed");
@@ -60,6 +88,81 @@ namespace DemoQATests.UITests.PageObjects
         {
             Logger.Info("Getting profile username");
             return TestHelpers.WaitAndGetElementText(profileUserName, DEFAULT_WAIT_TIMEOUT);
+        }
+
+        public bool IsLoginPageDisplayed()
+        {
+            Logger.Info("Checking if login page is displayed");
+            // Check if login button is visible, which indicates we're still on the login page
+            return TestHelpers.IsElementDisplayed(loginButton);
+        }
+
+        public bool IsErrorMessageDisplayed()
+        {
+            Logger.Info("Checking if error message is displayed");
+            
+            // Check for various possible error message locations on DemoQA
+            var possibleErrorLocators = new[]
+            {
+                Locator.ById("name"),
+                Locator.ByXPath("//p[contains(@class, 'mb-1') and contains(text(), 'Invalid')]"),
+                Locator.ByXPath("//div[contains(@class, 'rt-tbody')]//div[contains(text(), 'No rows found')]"),
+                Locator.ByXPath("//*[contains(text(), 'Invalid') or contains(text(), 'invalid')]")
+            };
+            
+            foreach (var locator in possibleErrorLocators)
+            {
+                if (TestHelpers.IsElementDisplayed(locator))
+                {
+                    return true;
+                }
+            }
+            
+            return false;
+        }
+
+        public string GetErrorMessage()
+        {
+            Logger.Info("Getting error message text");
+            try
+            {
+                // Try to get text from various possible error message locations
+                var possibleErrorLocators = new[]
+                {
+                    Locator.ById("name"),
+                    Locator.ByXPath("//p[contains(@class, 'mb-1') and contains(text(), 'Invalid')]"),
+                    Locator.ByXPath("//div[contains(@class, 'rt-tbody')]//div[contains(text(), 'No rows found')]"),
+                    Locator.ByXPath("//*[contains(text(), 'Invalid') or contains(text(), 'invalid')]")
+                };
+                
+                foreach (var locator in possibleErrorLocators)
+                {
+                    try
+                    {
+                        if (TestHelpers.IsElementDisplayed(locator))
+                        {
+                            return TestHelpers.GetElementText(locator);
+                        }
+                    }
+                    catch
+                    {
+                        continue;
+                    }
+                }
+                
+                // If no specific error message found but login failed, return generic message
+                if (TestHelpers.IsElementDisplayed(loginButton))
+                {
+                    return "Login failed - still on login page";
+                }
+                
+                return "Unknown error occurred";
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"Error getting error message: {ex.Message}");
+                return "Error retrieving error message";
+            }
         }
     }
 }

@@ -97,6 +97,7 @@ namespace DemoQATests.UITests.Utils
 
         /// <summary>
         /// Checks if the specified element is displayed on the page.
+        /// Uses FindElements to avoid implicit wait delays and returns immediately.
         /// </summary>
         /// <param name="locator">The locator for the element to check.</param>
         /// <returns>True if the element is displayed; otherwise, false.</returns>
@@ -104,14 +105,10 @@ namespace DemoQATests.UITests.Utils
         {
             Log(NLog.LogLevel.Info, $"Checking if element is displayed: '{locator}'");
 
-            try
-            {
-                return Driver!.FindElement(locator.ToSeleniumBy()).Displayed;
-            }
-            catch (NoSuchElementException)
-            {
-                return false;
-            }
+            var elements = Driver!.FindElements(locator.ToSeleniumBy());
+            
+            // Return true only if element exists and is displayed
+            return elements.Count > 0 && elements[0].Displayed;
         }
 
         /// <summary>

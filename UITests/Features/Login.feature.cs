@@ -75,12 +75,20 @@ namespace DemoQATests.UITests.Features
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Successful login")]
-        public void SuccessfulLogin()
+        [NUnit.Framework.DescriptionAttribute("Login with different credentials")]
+        [NUnit.Framework.TestCaseAttribute("testuser", "Password123!", "true", null)]
+        [NUnit.Framework.TestCaseAttribute("invaliduser", "Password123!", "false", null)]
+        [NUnit.Framework.TestCaseAttribute("testuser", "wrongpassword", "false", null)]
+        [NUnit.Framework.TestCaseAttribute("emptyuser", "", "false", null)]
+        [NUnit.Framework.TestCaseAttribute("", "Password123!", "false", null)]
+        public void LoginWithDifferentCredentials(string username, string password, string logged_In, string[] exampleTags)
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Successful login", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            argumentsOfScenario.Add("username", username);
+            argumentsOfScenario.Add("password", password);
+            argumentsOfScenario.Add("logged_in", logged_In);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Login with different credentials", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 6
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -95,10 +103,10 @@ namespace DemoQATests.UITests.Features
         testRunner.Given("I navigate to the login page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 8
-        testRunner.When("On Login page: I enter user name \'testuser\' and password \'Password123!\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+        testRunner.When(string.Format("On Login page: I will try to login with user name \'{0}\' and password \'{1}\'", username, password), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 9
-        testRunner.Then("I should see my profile page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+        testRunner.Then(string.Format("On Login page: I am successfully logged in = \'{0}\'", logged_In), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

@@ -35,7 +35,6 @@ namespace DemoQATests.UITests.Utils
             {
                 driver.Manage().Window.Maximize();
             }
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
 
             Logger.Info("WebDriver instance created and configured successfully");
             return driver;
