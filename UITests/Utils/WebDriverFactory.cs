@@ -43,17 +43,53 @@ namespace DemoQATests.UITests.Utils
 
         private static IWebDriver CreateChromeDriver(bool headless)
         {
-            new DriverManager().SetUpDriver(new ChromeConfig());
-            var options = new ChromeOptions();
-            
-            if (headless)
+            try
             {
-                options.AddArgument("--headless");
-                options.AddArgument("--no-sandbox");
-                options.AddArgument("--disable-dev-shm-usage");
+                Logger.Debug("Setting up Chrome driver");
+                new DriverManager().SetUpDriver(new ChromeConfig());
+                
+                var options = new ChromeOptions();
+                
+                // Configure headless mode with improved options
+                if (headless)
+                {
+                    options.AddArguments(
+                        "--headless=new",           // Use new headless mode (Chrome 109+)
+                        "--no-sandbox",
+                        "--disable-dev-shm-usage",
+                        "--disable-gpu",            // Disable GPU in headless mode
+                        "--window-size=1920,1080"   // Set consistent window size
+                    );
+                }
+
+                // Add stability and performance options
+                options.AddArguments(
+                    "--disable-blink-features=AutomationControlled",  // Hide automation detection
+                    "--disable-extensions",                            // Disable extensions for stability
+                    "--no-first-run",                                  // Skip first run wizards
+                    "--disable-default-apps",                          // Disable default apps
+                    "--disable-infobars"                               // Disable info bars
+                );
+
+                // Enhanced preferences to disable popups and notifications
+                options.AddUserProfilePreference("credentials_enable_service", false);
+                options.AddUserProfilePreference("profile.password_manager_enabled", false);
+                options.AddUserProfilePreference("profile.password_manager_leak_detection", false);
+                options.AddUserProfilePreference("profile.default_content_setting_values.notifications", 2);  // Block notifications
+                options.AddUserProfilePreference("profile.default_content_settings.popups", 0);                // Block popups
+
+                // Hide automation indicators
+                options.AddExcludedArgument("enable-automation");
+                options.AddAdditionalOption("useAutomationExtension", false);
+
+                Logger.Debug("Chrome driver configured successfully");
+                return new ChromeDriver(options);
             }
-            
-            return new ChromeDriver(options);
+            catch (Exception ex)
+            {
+                Logger.Error(ex, "Failed to create Chrome driver");
+                throw;
+            }
         }
 
         private static IWebDriver CreateFirefoxDriver(bool headless)

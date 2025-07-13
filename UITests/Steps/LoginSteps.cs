@@ -21,10 +21,10 @@ namespace DemoQATests.UITests.Steps
             loginPage.NavigateToLoginPage();
         }
 
-        [When(@"I enter valid credentials")]
-        public void WhenIEnterValidCredentials()
+        [When(@"On Login page: I enter user name '(.*)' and password '(.*)'")]
+        public void WhenIEnterValidCredentials(string userName, string password)
         {
-            loginPage.EnterCredentials("testuser", "Password123!");
+            loginPage.EnterCredentials(userName, password);
             loginPage.ClickLogin();
         }
 
@@ -32,7 +32,7 @@ namespace DemoQATests.UITests.Steps
         public void ThenIShouldSeeMyProfilePage()
         {
             Assert.That(loginPage.IsProfilePageDisplayed(), Is.True, "Profile page should be displayed after successful login");
-            
+
             string profileUserName = loginPage.GetProfileUserName();
             Assert.That(profileUserName, Is.Not.Empty, "Profile username should be displayed");
         }

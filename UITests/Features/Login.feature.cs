@@ -95,7 +95,7 @@ namespace DemoQATests.UITests.Features
         testRunner.Given("I navigate to the login page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 8
-        testRunner.When("I enter valid credentials", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+        testRunner.When("On Login page: I enter user name \'testuser\' and password \'Password123!\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 9
         testRunner.Then("I should see my profile page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");

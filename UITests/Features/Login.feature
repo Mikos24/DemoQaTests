@@ -5,5 +5,5 @@ Feature: Login functionality
 
     Scenario: Successful login
         Given I navigate to the login page
-        When I enter valid credentials
+        When On Login page: I enter user name 'testuser' and password 'Password123!'
         Then I should see my profile page
