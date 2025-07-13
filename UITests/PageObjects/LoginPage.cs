@@ -9,7 +9,8 @@ namespace DemoQATests.UITests.PageObjects
         private readonly Locator passwordInput = Locator.ById("password");
         private readonly Locator loginButton = Locator.ById("login");
         private readonly Locator profileUserName = Locator.ById("userName-value");
-        private readonly Locator errorMessage = Locator.ById("name");  // DemoQA uses this ID for error messages
+        private readonly Locator errorMessageByText = Locator.ByXPath("//*[contains(text(), 'Invalid') or contains(text(), 'invalid')]");
+        private readonly Locator invalidFormControl = Locator.ByXPath("//input[@class='mr-sm-2 is-invalid form-control']");
         #endregion
 
         #region Constants
@@ -104,8 +105,8 @@ namespace DemoQATests.UITests.PageObjects
             // Check for various possible error message locations on DemoQA
             var possibleErrorLocators = new[]
             {
-                Locator.ByXPath("//*[contains(text(), 'Invalid') or contains(text(), 'invalid')]"),
-                Locator.ByXPath("//input[@class='mr-sm-2 is-invalid form-control']")
+                errorMessageByText,
+                invalidFormControl
             };
             
             foreach (var locator in possibleErrorLocators)
@@ -117,50 +118,6 @@ namespace DemoQATests.UITests.PageObjects
             }
             
             return false;
-        }
-
-        public string GetErrorMessage()
-        {
-            Logger.Info("Getting error message text");
-            try
-            {
-                // Try to get text from various possible error message locations
-                var possibleErrorLocators = new[]
-                {
-                    Locator.ById("name"),
-                    Locator.ByXPath("//p[contains(@class, 'mb-1') and contains(text(), 'Invalid')]"),
-                    Locator.ByXPath("//div[contains(@class, 'rt-tbody')]//div[contains(text(), 'No rows found')]"),
-                    Locator.ByXPath("//*[contains(text(), 'Invalid') or contains(text(), 'invalid')]")
-                };
-                
-                foreach (var locator in possibleErrorLocators)
-                {
-                    try
-                    {
-                        if (TestHelpers.IsElementDisplayed(locator))
-                        {
-                            return TestHelpers.GetElementText(locator);
-                        }
-                    }
-                    catch
-                    {
-                        continue;
-                    }
-                }
-                
-                // If no specific error message found but login failed, return generic message
-                if (TestHelpers.IsElementDisplayed(loginButton))
-                {
-                    return "Login failed - still on login page";
-                }
-                
-                return "Unknown error occurred";
-            }
-            catch (Exception ex)
-            {
-                Logger.Error($"Error getting error message: {ex.Message}");
-                return "Error retrieving error message";
-            }
         }
     }
 }

@@ -13,8 +13,8 @@ Feature: Login functionality
         | testuser | Password123! | true      |
 
     Examples: Invalid credentials
-        | username     | password      | logged_in |
-        | invaliduser  | Password123!  | false     |
-        | testuser     | wrongpassword | false     |
-        | emptyuser    |               | false     |
-        |              | Password123!  | false     |
+        | username    | password      | logged_in |
+        | invaliduser | Password123!  | false     |
+        | testuser    | wrongpassword | false     |
+        | testuser    |               | false     |
+        |             | Password123!  | false     |
