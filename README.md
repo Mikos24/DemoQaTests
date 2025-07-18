@@ -1,6 +1,6 @@
 # DemoQA Automation Tests
 
-This project contains automated tests using SpecFlow, Selenium WebDriver, RestSharp, and NUnit for testing DemoQA functionality.
+This project wos prepared for Glencore as part of the interview process. It contains automated tests using SpecFlow, Selenium WebDriver, RestSharp, and NUnit for testing DemoQA functionality.
 
 ## Project Structure
 
